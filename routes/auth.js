@@ -77,7 +77,13 @@ router.get('/login', function(req, res, next) {
   res.render('login', { GOOGLE_CLIENT_ID: process.env['GOOGLE_CLIENT_ID'] });
 });
 
-router.post('/login/federated/google/one-tap', passport.authenticate('google-one-tap', {
+function debug(req, res, next) {
+  console.log(req.body);
+  console.log(req.headers);
+  next();
+}
+
+router.post('/login/identity/google', debug, passport.authenticate('google-one-tap', {
   successReturnToOrRedirect: '/',
   failureRedirect: '/login'
 }));
